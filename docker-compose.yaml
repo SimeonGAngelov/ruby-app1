@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:80"
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: "dev-secret-key-base-change-me"
+    volumes:
+      - ./db:/rails/db
