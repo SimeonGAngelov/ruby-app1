@@ -1,0 +1,44 @@
+<h1>Weather Today</h1>
+
+<% if @error_message.present? %>
+  <div style="color: red; border: 1px solid red; padding: 8px; margin-bottom: 12px;">
+    <strong>Error:</strong> <%= @error_message %>
+  </div>
+<% end %>
+
+<%= form_with url: weather_index_path, method: :post, local: true do %>
+  <div>
+    <label>Latitude</label>
+    <%= text_field_tag :latitude, @latitude %>
+  </div>
+
+  <div>
+    <label>Longitude</label>
+    <%= text_field_tag :longitude, @longitude %>
+  </div>
+
+  <%= submit_tag "Get the current weather" %>
+<% end %>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Temperature (°C)</th>
+      <th>Wind speed (km/h)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% (@records || []).each do |r| %>
+      <tr>
+        <td><%= r.timestamp %></td>
+        <td><%= r.latitude %></td>
+        <td><%= r.longitude %></td>
+        <td><%= r.temperature_2m %></td>
+        <td><%= r.wind_speed_10m %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
