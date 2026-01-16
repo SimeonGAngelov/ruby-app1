@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  timestamp: 2026-01-11 19:18:01
-  latitude: 1.5
-  longitude: 1.5
-  wind_speed: 1.5
+  location: one
+  timestamp: 2026-01-16 18:10:01
+  temperature_2m: 9.99
+  wind_speed_10m: 9.99
 
 two:
-  timestamp: 2026-01-11 19:18:01
-  latitude: 1.5
-  longitude: 1.5
-  wind_speed: 1.5
+  location: two
+  timestamp: 2026-01-16 18:10:01
+  temperature_2m: 9.99
+  wind_speed_10m: 9.99
