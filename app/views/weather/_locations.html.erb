@@ -1,0 +1,45 @@
+<hr>
+
+<% if @locations.empty? %>
+  <p>No locations yet.</p>
+<% end %>
+
+<% @locations.each do |loc| %>
+  <h3>Location: (<%= loc.latitude %>, <%= loc.longitude %>)</h3>
+
+  <% current = @current_by_location[loc.id] %>
+  <% if current %>
+    <p>
+      Time: <%= current[:time] %><br>
+      Temperature: <%= current[:temperature] %> °C<br>
+      Wind speed: <%= current[:wind_speed] %> km/h
+    </p>
+  <% end %>
+
+  <h4>History</h4>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Temperature</th>
+        <th>Wind speed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (@records_by_location[loc.id] || []).each do |r| %>
+        <tr>
+          <td><%= r.timestamp %></td>
+          <td><%= r.temperature_2m %></td>
+          <td><%= r.wind_speed_10m %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= button_to "Delete location",
+        location_path(loc),
+        method: :delete,
+        data: { turbo_confirm: "Delete this location and its history?" } %>
+
+  <hr>
+<% end %>

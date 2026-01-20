@@ -1,38 +1,4 @@
-<h1>Weather</h1>
-
-<p>
-  Logged in as <strong><%= current_user.name %></strong>
-  |
-  <%= button_to "Logout", sessions_path, method: :delete %>
-  <%= button_to "Delete my account",
-        user_path(current_user),
-        method: :delete,
-        data: { turbo_confirm: "Delete your account and all data?" } %>
-</p>
-
-<% if @error_message.present? %>
-  <div style="color:red; border:1px solid red; padding:6px">
-    <%= @error_message %>
-  </div>
-<% end %>
-
-<h2>Search by coordinates</h2>
-
-<%= form_with url: weather_index_path, method: :post do %>
-  <div>
-    <label>Latitude</label>
-    <%= text_field_tag :latitude %>
-  </div>
-
-  <div>
-    <label>Longitude</label>
-    <%= text_field_tag :longitude %>
-  </div>
-
-  <%= submit_tag "Search & add location" %>
-<% end %>
-
-<%= turbo_frame_tag "weather_locations" do %>
+<%= turbo_stream.replace "weather_locations" do %>
   <% if @locations.empty? %>
     <hr>
     <p>No locations yet.</p>

@@ -1,32 +1,28 @@
 class WeatherController < ApplicationController
+  before_action :require_login
+
   def index
-    @records = HourlyWeather.order(timestamp: :desc)
-    @latitude = params[:latitude]
-    @longitude = params[:longitude]
+    load_weather_dashboard_data
   end
 
   def create
-    @latitude = params.require(:latitude)
-    @longitude = params.require(:longitude)
+    lat = params.require(:latitude)
+    lon = params.require(:longitude)
 
-    current_weather = WeatherService.new.current_weather(latitude: @latitude, longitude: @longitude)
+    current_user.locations.find_or_create_by!(latitude: lat, longitude: lon)
 
-    record = HourlyWeather.find_or_initialize_by(
-      timestamp: Time.parse(current_weather[:time])
-    )
+    load_weather_dashboard_data
 
-    record.update!(
-      latitude: current_weather[:latitude],
-      longitude: current_weather[:longitude],
-      temperature_2m: current_weather[:temperature],
-      wind_speed_10m: current_weather[:wind_speed]
-    )
-
-
-    redirect_to weather_index_path
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to weather_index_path }
+    end
   rescue => e
-    @records = HourlyWeather.order(timestamp: :desc).limit(200)
     @error_message = e.message
-    render :index, status: :unprocessable_entity
+    load_weather_dashboard_data
+    respond_to do |format|
+      format.turbo_stream { render :index, status: :unprocessable_entity }
+      format.html { render :index, status: :unprocessable_entity }
+    end
   end
 end

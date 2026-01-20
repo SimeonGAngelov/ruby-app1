@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_16_164111) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_20_120207) do
   create_table "hourly_weathers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "location_id", null: false
@@ -20,7 +20,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_16_164111) do
     t.float "wind_speed_10m"
     t.index ["location_id", "timestamp"], name: "index_hourly_weathers_on_location_id_and_timestamp", unique: true
     t.index ["location_id"], name: "index_hourly_weathers_on_location_id"
-    t.index ["timestamp"], name: "index_hourly_weathers_on_timestamp", unique: true
   end
 
   create_table "locations", force: :cascade do |t|

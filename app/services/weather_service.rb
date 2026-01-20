@@ -22,10 +22,10 @@ class WeatherService
 
     {
       time: current_weather.fetch("time"),
-      latitude:  data.fetch("latitude"),
-      longitude: data.fetch("longitude"),
       temperature: current_weather.fetch("temperature"),
-      wind_speed: current_weather.fetch("windspeed")
+      wind_speed: current_weather.fetch("windspeed"),
+      latitude:  data.fetch("latitude"),
+      longitude: data.fetch("longitude")
     }
   end
 end

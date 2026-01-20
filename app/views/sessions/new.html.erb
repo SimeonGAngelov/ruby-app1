@@ -1,0 +1,24 @@
+<h1>Login</h1>
+
+<% if flash[:alert].present? %>
+  <p style="color:red"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with url: sessions_path, method: :post, local: true do %>
+  <div>
+    <label>Name</label>
+    <%= text_field_tag :name %>
+  </div>
+
+  <div>
+    <label>Password</label>
+    <%= password_field_tag :password %>
+  </div>
+
+  <%= submit_tag "Login" %>
+<% end %>
+
+<p>
+  Don`t have an account?
+  <%= link_to "Register", new_user_path %>
+</p>
