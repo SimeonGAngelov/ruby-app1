@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
     @location.destroy!
 
     respond_to do |format|
-      format.turbo_stream   # -> destroy.turbo_stream.erb
+      format.turbo_stream
       format.html { redirect_to weather_index_path, notice: "Location deleted." }
     end
   end

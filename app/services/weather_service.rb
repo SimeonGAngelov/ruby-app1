@@ -13,7 +13,11 @@ class WeatherService
 
     response = HTTPX.get(BASE_URL, params: params)
 
-    if response.status != 200
+    unless response.is_a?(HTTPX::Response)
+      raise "Network error while calling weather API: #{response.class}"
+    end
+
+    unless response.status == 200
       raise "HTTP error #{response.status}"
     end
 
@@ -22,10 +26,10 @@ class WeatherService
 
     {
       time: current_weather.fetch("time"),
+      latitude: data.fetch("latitude"),
+      longitude: data.fetch("longitude"),
       temperature: current_weather.fetch("temperature"),
-      wind_speed: current_weather.fetch("windspeed"),
-      latitude:  data.fetch("latitude"),
-      longitude: data.fetch("longitude")
+      wind_speed: current_weather.fetch("windspeed")
     }
   end
 end

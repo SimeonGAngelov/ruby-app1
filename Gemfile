@@ -67,3 +67,5 @@ end
 
 gem "httpx"
 gem "bcrypt"
+gem "sidekiq"
+gem "redis", "~> 5.0"

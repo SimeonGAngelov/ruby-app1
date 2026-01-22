@@ -9,20 +9,12 @@ class WeatherController < ApplicationController
     lat = params.require(:latitude)
     lon = params.require(:longitude)
 
-    current_user.locations.find_or_create_by!(latitude: lat, longitude: lon)
+    location = current_user.locations.find_or_create_by!(latitude: lat, longitude: lon)
 
-    load_weather_dashboard_data
+    FetchWeatherJob.perform_later(location.id)
 
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to weather_index_path }
-    end
+    redirect_to weather_index_path, notice: "Your job is running. Refresh in a moment to see new data."
   rescue => e
-    @error_message = e.message
-    load_weather_dashboard_data
-    respond_to do |format|
-      format.turbo_stream { render :index, status: :unprocessable_entity }
-      format.html { render :index, status: :unprocessable_entity }
-    end
+    redirect_to weather_index_path, alert: e.message
   end
 end

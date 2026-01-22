@@ -1,9 +1,16 @@
 <h1>Weather</h1>
 
+<% if @error_message.present? %>
+  <div style="background:#ffe6e6; border:1px solid red; padding:10px; margin-bottom:15px;">
+    <strong>Error:</strong>
+    <%= @error_message %>
+  </div>
+<% end %>
+
 <p>
   Logged in as <strong><%= current_user.name %></strong>
   |
-  <%= button_to "Logout", sessions_path, method: :delete %>
+  <%= button_to "Logout", session_path, method: :delete %>
   <%= button_to "Delete my account",
         user_path(current_user),
         method: :delete,

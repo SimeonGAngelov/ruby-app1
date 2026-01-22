@@ -4,7 +4,7 @@
   <p style="color:red"><%= flash[:alert] %></p>
 <% end %>
 
-<%= form_with url: sessions_path, method: :post, local: true do %>
+<%= form_with url: session_path, method: :post, local: true do %>
   <div>
     <label>Name</label>
     <%= text_field_tag :name %>
